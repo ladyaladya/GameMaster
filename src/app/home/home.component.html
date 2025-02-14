@@ -1,0 +1,36 @@
+<div class="home-container">
+    <h1>Ласкаво просимо до Game Master!</h1>
+    <p>Приготуйтеся до захоплюючих вікторин!</p>
+
+    <div class="teams-section">
+        <h2>Фракції</h2>
+        <ul>
+            <li *ngFor="let team of teams">
+                <strong>{{ team.name }}</strong>
+                <div *ngIf="team.leader">
+                    <p>Лідер: {{ team.leader.name }}</p>
+                </div>
+                <div *ngIf="!team.leader">
+                    <p>Лідер не обраний</p>
+                    <select (change)="selectLeader($event, team)">
+                        <option value="" disabled selected>Оберіть лідера</option>
+                        <option *ngFor="let student of students" [value]="student.id" [disabled]="isLeader(student)">
+                            {{ student.name }}
+                        </option>
+                    </select>
+                </div>
+                <ul>
+                    <li *ngFor="let member of team.members">{{ member.name }}</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="generate-teams">
+        <button (click)="generateTeams()">Створити фракції</button>
+    </div>
+
+    <div class="start-game">
+        <button (click)="startGame()">Розпочати гру</button>
+    </div>
+</div>

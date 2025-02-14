@@ -1,0 +1,20 @@
+<div class="question-container">
+    <h1>Тема: {{ selectedTopic }}</h1>
+
+    <div class="question">
+        <h3>Питання {{ currentQuestionIndex + 1 }}: {{ questions[currentQuestionIndex] }}</h3>
+    </div>
+
+    <div class="timer">
+        <p>Час: {{ timer }} секунд</p>
+    </div>
+
+    <div class="answer-buttons">
+        <button (click)="answerQuestion(true)">Правильно</button>
+        <button (click)="skipQuestion()">Пас</button>
+    </div>
+
+    <div class="question-status">
+        <p>Ваші бали: {{ score }}</p>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="game-container">
+    <h1>Гра "Game Master"</h1>
+
+    <div class="player-turn">
+        <h2>Черга: {{ currentPlayer?.student?.name }} ({{ currentPlayer?.team?.name }})</h2>
+        <button *ngIf="currentPlayer" (click)="nextTurn()">Наступний хід</button>
+    </div>
+
+    <div class="question-section" *ngIf="currentPlayer">
+        <h3>Оберіть тему для запитання</h3>
+        <ul>
+            <li *ngFor="let topic of availableQuestions">
+                <button (click)="selectTopic(topic)" [disabled]="hasAnswered">{{ topic }}</button>
+            </li>
+        </ul>
+    </div>
+
+    <div *ngIf="!currentPlayer">
+        <h2>Гра завершена! Переходьте до результатів.</h2>
+        <button (click)="endGame()">Перейти до результатів</button>
+    </div>
+</div>
