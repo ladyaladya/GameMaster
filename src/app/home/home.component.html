@@ -1,11 +1,31 @@
 <div class="home-container">
-    <h1>Ласкаво просимо до Game Master!</h1>
-    <p>Приготуйтеся до захоплюючих вікторин!</p>
+    <header class="header">
+        <h1 class="title">Визначаємо команди!</h1>
+    </header>
 
-    <div class="teams-section">
-        <h2>Фракції</h2>
-        <ul>
-            <li *ngFor="let team of teams">
+    <section class="leaders-section">
+        <h2 class="title">Лідери</h2>
+        <ol class="list-cards">
+            <li class="card" *ngFor="let leader of leaders; let i = index">
+                <div class="place-card">
+                    {{ i + 1 }}
+                </div>
+                <h3 class="title-card">
+                    {{ leader.name }}
+                </h3>
+                <div class="mark-card">
+                    {{ leader.mark }}
+                </div>
+                <!-- <img class="image-card" src="images/characters/incognito-man.jpg" alt="Фото учасника"> -->
+                <img class="image-card" [src]="imagePath" alt="Фото учасника">
+            </li>
+        </ol>
+    </section>
+
+    <section class="teams-section">
+        <h2 class="title">Фракції</h2>
+        <ul class="list-teams">
+            <li class="item-card" *ngFor="let team of teams">
                 <strong>{{ team.name }}</strong>
                 <div *ngIf="team.leader">
                     <p>Лідер: {{ team.leader.name }}</p>
@@ -24,7 +44,7 @@
                 </ul>
             </li>
         </ul>
-    </div>
+    </section>
 
     <div class="generate-teams">
         <button (click)="generateTeams()">Створити фракції</button>

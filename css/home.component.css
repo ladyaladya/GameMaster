@@ -1,0 +1,106 @@
+.home-container .subtitle {
+  font-size: 28px;
+}
+
+.header {
+  margin-top: 40px;
+  margin-bottom: 80px;
+  text-align: center;
+}
+
+.leaders-section {
+  padding: 20px;
+  background-color: rgba(29, 34, 40, 0.6509803922);
+  border: 2px solid black;
+  border-radius: 8px;
+  margin-bottom: 80px;
+  text-align: center;
+}
+.leaders-section .title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.leaders-section .list-cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 40px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+.leaders-section .card {
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #ebebeb;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 200px;
+          flex: 1 1 200px;
+}
+.leaders-section .card > * {
+  margin-bottom: 16px;
+}
+.leaders-section .card > :last-child {
+  margin-bottom: 0;
+}
+.leaders-section .card:nth-child(1) .place-card {
+  background-color: #FFD700;
+}
+.leaders-section .card:nth-child(2) .place-card {
+  background-color: #C0C0C0;
+}
+.leaders-section .card:nth-child(3) .place-card {
+  background-color: #CD7F32;
+}
+.leaders-section .card:nth-child(4) .place-card {
+  background-color: #4682B4;
+}
+.leaders-section .mark-card {
+  text-decoration: underline;
+}
+.leaders-section .place-card {
+  margin-top: -34px;
+  font-size: 30px;
+  padding: 10px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  min-width: 40px;
+  border-radius: 4px;
+  color: black;
+}
+.leaders-section .image-card {
+  max-width: 100%;
+}
+
+.teams-section .title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.list-teams {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 40px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.item-card {
+  padding: 20px;
+  color: #ef7938;
+  border-radius: 8px;
+  border: 2px solid #ef7938;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 200px;
+          flex: 1 1 200px;
+}
+.item-card:nth-child(2) {
+  color: #4cc2f1;
+}
+.item-card:nth-child(3) {
+  color: #75c2a8;
+}
+.item-card:nth-child(4) {
+  color: #fab632;
+}

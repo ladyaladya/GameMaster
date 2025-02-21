@@ -1,50 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
-interface Student {
-    id: number;
-    name: string;
-}
-
-interface Team {
-    id: number;
-    name: string;
-    leader: Student | null;
-    members: Student[];
-}
+import { Student } from '../models/student';
+import { Team } from '../models/team';
+import { StudentsService } from '../services/students.service';
+import { TeamType } from '../models/team-type';
 
 @Component({
     selector: 'app-home',
     standalone: true,
     imports: [CommonModule],
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css']
+    styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-    students: Student[] = [
-        { id: 1, name: 'Олександр' },
-        // { id: 2, name: 'Марія' },
-        // { id: 3, name: 'Іван' },
-        // { id: 4, name: 'Анна' },
-        // { id: 5, name: 'Володимир' },
-        // { id: 6, name: 'Катерина' },
-        // { id: 7, name: 'Дмитро' },
-        // { id: 8, name: 'Олена' }
-    ];
+export class HomeComponent implements OnInit {
+    students: Student[] = [];
+    leaders: Student[] = [];
+    imagePath: string = 'images/characters/hydro/furina.webp';
 
     teams: Team[] = [
-        { id: 1, name: 'Червоні (Вогонь)', leader: null, members: [] },
-        { id: 2, name: 'Сині (Вода)', leader: null, members: [] },
-        { id: 3, name: 'Коричневі (Земля)', leader: null, members: [] },
-        { id: 4, name: 'Зелені (Повітря)', leader: null, members: [] }
+        { id: 1, name: 'Фракція Вогню', teamType: TeamType.Pyro, leader: null, members: [] },
+        { id: 2, name: 'Фракція Води', teamType: TeamType.Hydro, leader: null, members: [] },
+        { id: 3, name: 'Фракція Землі', teamType: TeamType.Geo, leader: null, members: [] },
+        { id: 4, name: 'Фракція Повітря', teamType: TeamType.Anemo, leader: null, members: [] }
     ];
 
-    constructor(private router: Router) { }
+    constructor(private router: Router,
+        private studentsService: StudentsService
+    ) { }
+
+    ngOnInit(): void {
+        this.students = this.studentsService.getStudents();
+        this.leaders = this.studentsService.getLeaders();
+    }
 
     addStudent(name: string) {
         if (name) {
-            this.students.push({ id: this.students.length + 1, name });
+            // this.students.push({ id: this.students.length + 1, name });
         }
     }
 
