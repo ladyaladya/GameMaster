@@ -6,7 +6,7 @@
     <section class="leaders-section">
         <h2 class="title">Лідери</h2>
         <ol class="list-cards">
-            <li class="card" *ngFor="let leader of leaders; let i = index">
+            <li class="card" *ngFor="let leader of leaders$ | async; let i = index">
                 <div class="place-card">
                     {{ i + 1 }}
                 </div>
@@ -16,8 +16,7 @@
                 <div class="mark-card">
                     {{ leader.mark }}
                 </div>
-                <!-- <img class="image-card" src="images/characters/incognito-man.jpg" alt="Фото учасника"> -->
-                <img class="image-card" [src]="imagePath" alt="Фото учасника">
+                <img class="image-card" [src]="leader.imagePath" alt="Фото учасника">
             </li>
         </ol>
     </section>
@@ -25,7 +24,7 @@
     <section class="teams-section">
         <h2 class="title">Фракції</h2>
         <ul class="list-teams">
-            <li class="item-card" *ngFor="let team of teams">
+            <li class="item-card" *ngFor="let team of teams$ | async">
                 <strong>{{ team.name }}</strong>
                 <div *ngIf="team.leader">
                     <p>Лідер: {{ team.leader.name }}</p>
@@ -34,8 +33,9 @@
                     <p>Лідер не обраний</p>
                     <select (change)="selectLeader($event, team)">
                         <option value="" disabled selected>Оберіть лідера</option>
-                        <option *ngFor="let student of students" [value]="student.id" [disabled]="isLeader(student)">
-                            {{ student.name }}
+                        <option *ngFor="let leader of leaders$ | async" [value]="leader.id"
+                            [disabled]="isLeader(leader)">
+                            {{ leader.name }}
                         </option>
                     </select>
                 </div>

@@ -5,6 +5,7 @@ export interface Team {
     id: number;
     name: string;
     teamType: TeamType;
+    internalName: string;
     leader: Student | null;
     members: Student[];
 }
