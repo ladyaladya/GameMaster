@@ -30,28 +30,32 @@ export class HomeComponent implements OnInit {
     ngOnInit(): void {
         this.students$ = this.studentsService.students$;
         this.leaders$ = this.students$.pipe(
-            map(students => students.sort((a, b) => b.mark - a.mark).slice(0, 4))
+            map(students => students.sort((a, b) => b.mark - a.mark).slice(0, 3))
         );
         this.teams$ = this.teamsService.teams$;
     }
 
-    selectLeader(event: any, team: Team) {
-        const selectedStudentId = event.target.value;
-        this.students$.subscribe(students => {
-            const selectedStudent = students.find(s => s.id === parseInt(selectedStudentId));
+    assignLeaderToTeam(event: any, leader: Student) {
+        const selectedTeamInternalName = event.target.value;
 
-            if (selectedStudent) {
-                team.leader = selectedStudent;
+        this.teams$.subscribe(teams => {
+            const selectedTeam = teams.find(team => team.internalName === selectedTeamInternalName);
 
-                // Додаємо лідера до членів команди
-                if (!team.members.some(member => member.id === selectedStudent.id)) {
-                    team.members.push(selectedStudent);
+            if (selectedTeam) {
+                // Призначаємо лідера команді
+                selectedTeam.leader = leader;
+
+                // Додаємо лідера до членів команди (якщо його там немає)
+                if (!selectedTeam.members.some(member => member.id === leader.id)) {
+                    selectedTeam.members.push(leader);
                 }
 
-                this.setStudentImage(selectedStudent, team);
+                // Встановлюємо шлях до зображення
+                this.setStudentImage(leader, selectedTeam);
             }
         });
     }
+
 
     addStudent(name: string) {
         if (name) {

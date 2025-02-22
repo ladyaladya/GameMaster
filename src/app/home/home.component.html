@@ -16,35 +16,21 @@
                 <div class="mark-card">
                     {{ leader.mark }}
                 </div>
-                <img class="image-card" [src]="leader.imagePath" alt="Фото учасника">
+                <img *ngIf="leader.imagePath" class="image-card" [src]="leader.imagePath" alt="Фото учасника">
+                <span *ngIf="!leader.imagePath" class="image-card--fake" alt="Фото учасника"> ? </span>
+                <div>
+                    <select class="select" (change)="assignLeaderToTeam($event, leader)">
+                        <option value="" disabled selected>Оберіть фракцію</option>
+                        <option *ngFor="let team of teams$ | async" [value]="team.internalName"
+                            [disabled]="team.leader">
+                            {{ team.name }}
+                        </option>
+                    </select>
+                </div>
             </li>
         </ol>
     </section>
 
-    <section class="teams-section">
-        <h2 class="title">Фракції</h2>
-        <ul class="list-teams">
-            <li class="item-card" *ngFor="let team of teams$ | async">
-                <strong>{{ team.name }}</strong>
-                <div *ngIf="team.leader">
-                    <p>Лідер: {{ team.leader.name }}</p>
-                </div>
-                <div *ngIf="!team.leader">
-                    <p>Лідер не обраний</p>
-                    <select (change)="selectLeader($event, team)">
-                        <option value="" disabled selected>Оберіть лідера</option>
-                        <option *ngFor="let leader of leaders$ | async" [value]="leader.id"
-                            [disabled]="isLeader(leader)">
-                            {{ leader.name }}
-                        </option>
-                    </select>
-                </div>
-                <ul>
-                    <li *ngFor="let member of team.members">{{ member.name }}</li>
-                </ul>
-            </li>
-        </ul>
-    </section>
 
     <div class="generate-teams">
         <button (click)="generateTeams()">Створити фракції</button>

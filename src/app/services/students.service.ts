@@ -27,7 +27,7 @@ export class StudentsService {
         return this.studentsSubject.getValue(); // Отримуємо поточний список
     }
 
-    getLeaders(count: number = 4): Student[] {
+    getLeaders(count: number = 3): Student[] {
         return [...this.studentsSubject.getValue()]
             .sort((a, b) => b.mark - a.mark)
             .slice(0, count);
