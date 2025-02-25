@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
     students$!: Observable<Student[]>;
     leaders$!: Observable<Student[]>;
     teams$!: Observable<Team[]>;
+    areTeamsGenerated = false;
 
     constructor(
         private router: Router,
@@ -56,7 +57,6 @@ export class HomeComponent implements OnInit {
         });
     }
 
-
     addStudent(name: string) {
         if (name) {
             const newStudent: Student = {
@@ -78,31 +78,38 @@ export class HomeComponent implements OnInit {
 
     generateTeams() {
         this.students$.subscribe(students => {
-            // Створюємо масив студентів без лідерів
+            // Отримуємо всі команди
+            const teams = this.teamsService.getTeams();
+
+            // Фільтруємо студентів, які ще не є лідерами
             const remainingStudents = students.filter(student =>
-                !this.teamsService.getTeams().some(team => team.leader?.id === student.id)
+                !teams.some(team => team.leader?.id === student.id)
             );
 
             // Перемішуємо залишкових студентів
-            let shuffledStudents = this.shuffleArray(remainingStudents);
+            const shuffledStudents = this.shuffleArray(remainingStudents);
             let teamIndex = 0;
 
-            // Розподіляємо студентів по командам
-            this.teamsService.getTeams().forEach(team => {
-                team.members = [];
+            // Очищаємо лише учасників команд (залишаючи лідерів)
+            teams.forEach(team => {
+                team.members = team.members.filter(member => member.id === team.leader?.id);
             });
 
+            // Розподіляємо студентів по командам
             for (const student of shuffledStudents) {
-                const team = this.teamsService.getTeams()[teamIndex];
-                if (!team.leader) {
-                    team.leader = student; // Призначаємо лідера
-                } else {
+                const team = teams[teamIndex];
+
+                // Додаємо студента в команду, якщо він ще не є лідером
+                if (!team.members.some(member => member.id === student.id)) {
                     team.members.push(student);
                 }
-                teamIndex = (teamIndex + 1) % this.teamsService.getTeams().length;
+
+                teamIndex = (teamIndex + 1) % teams.length;
             }
 
-            this.teams$ = this.teamsService.teams$; // Оновлюємо teams$
+            // Оновлюємо teams$
+            this.teams$ = this.teamsService.teams$;
+            this.areTeamsGenerated = true;
         });
     }
 

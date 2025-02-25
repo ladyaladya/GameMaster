@@ -3,7 +3,7 @@
         <h1 class="title">Визначаємо команди!</h1>
     </header>
 
-    <section class="leaders-section">
+    <section *ngIf="!areTeamsGenerated" class="leaders-section">
         <h2 class="title">Лідери</h2>
         <ol class="list-cards">
             <li class="card" *ngFor="let leader of leaders$ | async; let i = index">
@@ -31,12 +31,22 @@
         </ol>
     </section>
 
+    <!-- Показуємо команди тільки після того, як лідери призначені -->
+    <section *ngIf="areTeamsGenerated" class="leaders-section">
+        <h2 class="title">Команди</h2>
+        <ol class="list-cards" *ngFor="let team of teams$ | async; let teamIndex = index">
+            <h3>Команда {{ teamIndex + 1 }}: {{ team.name }}</h3>
+            <li class="card" *ngFor="let member of team.members; let memberIndex = index">
+                {{ member.name }}
+            </li>
+        </ol>
+    </section>
 
-    <div class="generate-teams">
+    <div *ngIf="!areTeamsGenerated" class="generate-teams">
         <button (click)="generateTeams()">Створити фракції</button>
     </div>
 
-    <div class="start-game">
+    <div *ngIf="areTeamsGenerated" class="start-game">
         <button (click)="startGame()">Розпочати гру</button>
     </div>
 </div>
